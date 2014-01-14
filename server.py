@@ -22,25 +22,27 @@ def run_server(_host = '', _port=5151):
 	print("* Socket Now Listening on Port %s" % str(_port))
 
 	while True:
-		(clientsocket, address) = serversocket.accept()
-		print("* Connected with %s:%s" % (str(address[0]), str(address[1])))
-
-		data = clientsocket.recv(1024)
-		if not data:
-			break
-
-		print("# Received: %s" % str(data))
-		
-		response = "Thank you!\n"
-		clientsocket.sendall(response.encode("utf-8"))
-		print("* Gave Thanks")
-		
-		clientsocket.close()
-		print("* Client Closed")
-	
-	serversocket.close()
-	print("* All Sockets Closed")
-	sys.exit(0)
+		try:
+			(clientsocket, address) = serversocket.accept()
+			print("* Connected with %s:%s" % (str(address[0]), str(address[1])))
+			
+			data = clientsocket.recv(1024)
+			if not data:
+				break
+			
+			print("# Received: %s" % str(data))
+			
+			response = "Thank you!\n"
+			clientsocket.sendall(response.encode("utf-8"))
+			print("* Gave Thanks")
+			
+			clientsocket.close()
+			print("* Client Closed")
+		except(KeyboardInterrupt, SystemExit):
+			print("\r* Caught Ctrl-C")
+			serversocket.close()
+			print("* All Sockets Closed")
+			sys.exit(0)
 
 if __name__ == "__main__":
 	run_server()
