@@ -5,7 +5,6 @@
 
 import unittest
 import pep8
-from testscenarios import generate_scenarios, TestWithScenarios
 
 
 class Pep8ConformanceTestCase(unittest.TestCase):
